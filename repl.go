@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 )
@@ -30,12 +29,10 @@ func startRepl(cfg *config) {
 		if command, ok := availableCommands[commandName]; ok {
 			err := command.callback(cfg)
 			if err != nil {
-				log.Fatalf("Error occured %v", err)
+				fmt.Println(err)
 			}
-			continue
 		} else {
 			fmt.Println("Unknown command")
-			continue
 		}
 
 	}
@@ -63,6 +60,11 @@ func getCommands() map[string]cliCommand {
 			name:        "map",
 			description: "List locations",
 			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "List Previous locations",
+			callback:    commandMapBack,
 		},
 	}
 }
