@@ -26,7 +26,8 @@ func startRepl() {
 		}
 
 		commandName := words[0]
-		if command, ok := getCommands()[commandName]; ok {
+		availableCommands := getCommands()
+		if command, ok := availableCommands[commandName]; ok {
 			err := command.callback()
 			if err != nil {
 				log.Fatalf("Error occured %v", err)
@@ -40,9 +41,9 @@ func startRepl() {
 	}
 }
 
-func cleanInput(text string) []string {
-	output := strings.ToLower(text)
-	words := strings.Fields(output)
+func cleanInput(str string) []string {
+	lowered := strings.ToLower(str)
+	words := strings.Fields(lowered)
 	return words
 }
 
@@ -57,6 +58,11 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Exit the repl",
 			callback:    commandExit,
+		},
+		"map": {
+			name:        "map",
+			description: "List locations",
+			callback:    commandMap,
 		},
 	}
 }
