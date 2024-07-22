@@ -11,10 +11,10 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(cfg *config) error
 }
 
-func startRepl() {
+func startRepl(cfg *config) {
 	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("pokedex > ")
@@ -28,7 +28,7 @@ func startRepl() {
 		commandName := words[0]
 		availableCommands := getCommands()
 		if command, ok := availableCommands[commandName]; ok {
-			err := command.callback()
+			err := command.callback(cfg)
 			if err != nil {
 				log.Fatalf("Error occured %v", err)
 			}

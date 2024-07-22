@@ -3,14 +3,11 @@ package main
 import (
 	"fmt"
 	"log"
-
-	"github.com/harsh-m-patil/pokedex/internal/pokeapi"
 )
 
-func commandMap() error {
-	pokeapiClient := pokeapi.NewClient()
-
-	resp, err := pokeapiClient.ListLocationAreas()
+func commandMap(cfg *config) error {
+	pokeapiClient := cfg.pokeapiClient
+	resp, err := pokeapiClient.ListLocationAreas(cfg.nextLocationAreaURL)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -19,6 +16,7 @@ func commandMap() error {
 	for _, area := range resp.Results {
 		fmt.Printf("- %s\n", area.Name)
 	}
-
+	cfg.nextLocationAreaURL = resp.Next
+	cfg.prevLocationAreaURL = resp.Previous
 	return err
 }

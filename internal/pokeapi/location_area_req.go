@@ -9,9 +9,13 @@ import (
 	"github.com/harsh-m-patil/pokedex/internal/pokeapi/types"
 )
 
-func (c *Client) ListLocationAreas() (types.LocationAreaResp, error) {
+func (c *Client) ListLocationAreas(pageURL *string) (types.LocationAreaResp, error) {
 	endpoint := "/location-area"
 	fullURL := baseURL + endpoint
+
+	if pageURL != nil {
+		fullURL = *pageURL
+	}
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
