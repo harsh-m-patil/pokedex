@@ -1,2 +1,5 @@
-Pokedex
-> a REPL inspired from the pokedex from pokemon series
+# Pokedex
+
+> Small project from boot.dev
+
+![pokedex demo](./assets/demo.gif)
